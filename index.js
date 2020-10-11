@@ -1,21 +1,7 @@
-const tmi = require("tmi.js");
+const tmi = require('tmi.js');
 const axios = require('axios');
-require("dotenv").config();
-
-const options = {
-    options: {
-        debug: true
-    },
-    connection: {
-        reconnect: true,
-        secure: true
-    },
-    identity: {
-        username: process.env.USERNAME,
-        password: process.env.PASSWORD
-    },
-    channels: ['trefis']
-};
+const options = require('./options.js')
+const ping = require('./commands/ping/index.js');
 
 const commands = [`ping`, `repos`, `help`, `commands`];
 
@@ -28,7 +14,8 @@ client.on('message', (channel, tags, message, self) => {
     message = message.split(' ');
 
     if (message[0].toLowerCase() === '`ping') {
-        client.say(channel, `@${tags.username}, Pong! Reporting for duty! Okayeg ...`)
+        typeof ping.code;
+        //client.say(channel, `@${tags.username}, Pong! Reporting for duty! Okayeg ...`);
     }
 
     if (message[0].toLowerCase() === "`commands") {

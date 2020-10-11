@@ -17,6 +17,8 @@ const options = {
     channels: ['trefis']
 };
 
+const commands = [`ping`, `repos`, `help`, `commands`];
+
 const client = new tmi.client(options);
 client.connect(console.log('Successfully connected.')).catch(console.error);
 
@@ -26,9 +28,16 @@ client.on('message', (channel, tags, message, self) => {
     message = message.split(' ');
 
     if (message[0].toLowerCase() === '`ping') {
-        if (tags.username === 'trefis') {
-            client.say(channel, `@${tags.username}, Pong! Reporting for duty! TriHard 7`)
+        client.say(channel, `@${tags.username}, Pong! Reporting for duty! Okayeg ...`)
+    }
+
+    if (message[0].toLowerCase() === "`commands") {
+        let commandsQuery = '';
+        for (let i = 0; i < commands.length; i++) {
+            commandsQuery += ` ${commands[i]}, `;
         }
+
+        client.say(channel, `@${tags.username}, ${commandsQuery}`)
     }
 
     if (message[0].toLowerCase() === '`repos') {
@@ -75,6 +84,9 @@ client.on('message', (channel, tags, message, self) => {
                 break;
             case 'ping':
                 client.say(channel, `Ping!`);
+                break;
+            case 'commands':
+                client.say(channel, `Shows list of all commands that you can use.`);
                 break;
             case undefined:
                 client.say(channel, `No args specified!`);

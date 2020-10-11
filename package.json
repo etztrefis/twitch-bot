@@ -1,0 +1,22 @@
+{
+  "name": "twitch-donk",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/etztrefis/twitch-donk.git"
+  },
+  "author": "trefis",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/etztrefis/twitch-donk/issues"
+  },
+  "homepage": "https://github.com/etztrefis/twitch-donk#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0"
+  }
+}

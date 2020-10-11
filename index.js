@@ -3,19 +3,20 @@ const axios = require('axios');
 const options = require('./options.js')
 const ping = require('./commands/ping/index.js');
 
+const prefix = "`";
+
 const commands = [`ping`, `repos`, `help`, `commands`];
 
 const client = new tmi.client(options);
 client.connect(console.log('Successfully connected.')).catch(console.error);
 
-client.on('message', (channel, tags, message, self) => {
+client.on('message', async (channel, tags, message, self) => {
     if (self) return;
 
     message = message.split(' ');
 
-    if (message[0].toLowerCase() === '`ping') {
-        typeof ping.code;
-        //client.say(channel, `@${tags.username}, Pong! Reporting for duty! Okayeg ...`);
+    if (message[0].toLowerCase() === prefix + ping.Name) {
+        client.say(channel, `${tags.username}, ${await ping.Code()}`); //RESPONDING trefis, [object Object]
     }
 
     if (message[0].toLowerCase() === "`commands") {

@@ -1,37 +1,26 @@
-console.log(repos(`etztrefis`, '--full'));
-async function repos(user, type) {
-    const axios = require('axios');
-    if (type === "--full") {
-        let message = "";
-        axios({
-            method: 'get',
-            url: `https://api.github.com/users/${user}/repos`,
-            responseType: 'json',
-        })
-            .then(function (response) {
-                for (let i = 0; i < response.data.length; i++) {
-                    message += ` N: ${response.data[i]['name']}, F:  ${response.data[i]['fork']}, L:  ${response.data[i]['language']} ❗ `;
-                }
-            })
-            .catch(function (err) {
-                console.error(err);
-            })
-    }
-    else {
-        axios({
-            method: 'get',
-            url: `https://api.github.com/users/${user}/repos`,
-            responseType: 'json',
-        })
-            .then(function (response) {
-                for (let i = 0; i < response.data.length; i++) {
-                    smallMessage += ` N: ${response.data[i]['name']}❗ `;
-                }
+repos(`etztrefis`, `--full`).then((messages) => {
+    console.log(messages)
+});
 
-            })
-            .catch(function (err) {
-                console.error(err);
-            })
-    }
-    return ` ${message} `;
+async function repos(user, showFullData) {
+    const axios = require('axios').default;
+    const os = require('os');
+    const { data } = await axios({
+        method: 'get',
+        url: `https://api.github.com/users/${user}/repos`,
+        responseType: 'json',
+    });
+
+    const messageHandler = showFullData === `--full` ? githubReposFullName : githubReposName;
+    const messages = (data || []).map(messageHandler);
+
+    return messages.join(os.EOL);
+}
+
+function githubReposName(repoData) {
+    return ` N: ${repoData.name}❗ `;
+}
+
+function githubReposFullName(repoData) {
+    return ` N: ${repoData.name}, F:  ${repoData.fork}, L:  ${repoData.language} ❗ `;
 }

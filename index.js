@@ -21,7 +21,9 @@ client.on('message', async (channel, tags, message, self) => {
         }
         //REPOS COMMAND
         if (repos.Aliases.indexOf(args[0]) > -1) {
-            client.say(channel, `@${tags.username}, ${await repos.Code(args[1], args[2])}`)
+            repos.Code(args[1], args[2]).then((messages) => {
+                client.say(channel, `@${tags.username}, messages`)
+            });
         }
         //COMMANDS COMMAND
         if (ping.Aliases.indexOf(message[0]) > -1) {

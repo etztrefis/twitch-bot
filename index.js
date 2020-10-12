@@ -2,8 +2,7 @@ const tmi = require('tmi.js');
 const axios = require('axios');
 const options = require('./options.js')
 const ping = require('./commands/ping/index.js');
-
-const prefix = "`";
+const repos = require('./commands/repositories/index.js');
 
 const commands = [`ping`, `repos`, `help`, `commands`];
 
@@ -13,13 +12,17 @@ client.connect(console.log('Successfully connected.')).catch(console.error);
 client.on('message', async (channel, tags, message, self) => {
     if (self) return;
 
-    message = message.split(' ');
+    let prefix = message.charAt(0);
+    let body = message.substring(1);
+    let args = body.toLowerCase().split(' ');
 
-    if (message[0].toLowerCase() === prefix + ping.Name) {
-        client.say(channel, `${tags.username}, ${await ping.Code()}`); //RESPONDING trefis, [object Object]
+if(prefix == options.prefix){
+    //PING COMMAND
+    if (ping.Aliases.indexOf(body) > -1) {
+        client.say(channel, `@${tags.username}, ${await ping.Code()}`);
     }
-
-    if (message[0].toLowerCase() === "`commands") {
+    //COMMANDS COMMAND
+    if (ping.Aliases.indexOf(message[0]) > -1) {
         let commandsQuery = '';
         for (let i = 0; i < commands.length; i++) {
             commandsQuery += ` ${commands[i]}, `;
@@ -27,42 +30,9 @@ client.on('message', async (channel, tags, message, self) => {
 
         client.say(channel, `@${tags.username}, ${commandsQuery}`)
     }
-
-    if (message[0].toLowerCase() === '`repos') {
-        if (message[2] === "--full") {
-            let query = '';
-            axios({
-                method: 'get',
-                url: `https://api.github.com/users/${message[1]}/repos`,
-                responseType: 'json',
-            })
-                .then(function (response) {
-                    for (let i = 0; i < response.data.length; i++) {
-                        query += ` N: ${response.data[i]['name']}, F:  ${response.data[i]['fork']}, L:  ${response.data[i]['language']} ❗ `;
-                    }
-                    client.say(channel, `@${tags.username}, ${query}`);
-                })
-                .catch(function (err) {
-                    console.error(err);
-                })
-        }
-        else {
-            let query = '';
-            axios({
-                method: 'get',
-                url: `https://api.github.com/users/${message[1]}/repos`,
-                responseType: 'json',
-            })
-                .then(function (response) {
-                    for (let i = 0; i < response.data.length; i++) {
-                        query += ` N: ${response.data[i]['name']}❗ `;
-                    }
-                    client.say(channel, `@${tags.username}, ${query}`);
-                })
-                .catch(function (err) {
-                    console.error(err);
-                })
-        }
+    //REPOS COMMAND
+    if (repos.Aliases.indexOf(body) > -1) {
+        console.log("working");
     }
 
     if (message[0].toLowerCase() === '`help') {
@@ -83,4 +53,5 @@ client.on('message', async (channel, tags, message, self) => {
                 client.say(channel, 'idk... FeelsDankMan');
         }
     }
+}
 });

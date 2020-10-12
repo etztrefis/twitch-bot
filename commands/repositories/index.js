@@ -1,11 +1,12 @@
 module.exports = {
     Name: "repos",
     Author: "trefis",
-    Aliases: ["reps","repos"],
+    Aliases: ["reps", "repos"],
     Date: "", //LATER
     Code: (async function repos(user, type) {
         const axios = require('axios');
-        let query = '';
+        let fullMessage = null;
+        let smallMessage = "321";
         if (type === "--full") {
             axios({
                 method: 'get',
@@ -14,7 +15,7 @@ module.exports = {
             })
                 .then(function (response) {
                     for (let i = 0; i < response.data.length; i++) {
-                        query += ` N: ${response.data[i]['name']}, F:  ${response.data[i]['fork']}, L:  ${response.data[i]['language']} ❗ `;
+                        fullMessage += ` N: ${response.data[i]['name']}, F:  ${response.data[i]['fork']}, L:  ${response.data[i]['language']} ❗ `;
                     }
                 })
                 .catch(function (err) {
@@ -29,13 +30,15 @@ module.exports = {
             })
                 .then(function (response) {
                     for (let i = 0; i < response.data.length; i++) {
-                        query += ` N: ${response.data[i]['name']}❗ `;
+                        smallMessage += ` N: ${response.data[i]['name']}❗ `;
                     }
+
                 })
                 .catch(function (err) {
                     console.error(err);
                 })
         }
-        return query;
+
+        return fullMessage ? ` ${fullMessage} ` : `${smallMessage}`
     })
 };

@@ -1,6 +1,7 @@
 require("dotenv").config();
 
 const options = {
+    prefix: "`",
     options: {
         debug: true
     },

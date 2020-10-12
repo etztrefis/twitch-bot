@@ -22,7 +22,7 @@ client.on('message', async (channel, tags, message, self) => {
         //REPOS COMMAND
         if (repos.Aliases.indexOf(args[0]) > -1) {
             repos.Code(args[1], args[2]).then((messages) => {
-                client.say(channel, `@${tags.username}, messages`)
+                client.say(channel, `@${tags.username}, ${messages}`)
             });
         }
         //COMMANDS COMMAND

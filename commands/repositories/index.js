@@ -3,42 +3,19 @@ module.exports = {
     Author: "trefis",
     Aliases: ["reps", "repos"],
     Date: "", //LATER
-    Code: (async function repos(user, type) {
-        const axios = require('axios');
-        let fullMessage = null;
-        let smallMessage = "321";
-        if (type === "--full") {
-            axios({
-                method: 'get',
-                url: `https://api.github.com/users/${user}/repos`,
-                responseType: 'json',
-            })
-                .then(function (response) {
-                    for (let i = 0; i < response.data.length; i++) {
-                        fullMessage += ` N: ${response.data[i]['name']}, F:  ${response.data[i]['fork']}, L:  ${response.data[i]['language']} ❗ `;
-                    }
-                })
-                .catch(function (err) {
-                    console.error(err);
-                })
-        }
-        else {
-            axios({
-                method: 'get',
-                url: `https://api.github.com/users/${user}/repos`,
-                responseType: 'json',
-            })
-                .then(function (response) {
-                    for (let i = 0; i < response.data.length; i++) {
-                        smallMessage += ` N: ${response.data[i]['name']}❗ `;
-                    }
+    Code: (async function repos(user, showFullData) {
+        const axios = require('axios').default;
+        const os = require('os');
+        const { data } = await axios({
+            method: 'get',
+            url: `https://api.github.com/users/${user}/repos`,
+            responseType: 'json',
+        });
+        // OMEGALUL  OMEGALUL OMEGALUL OMEGALUL OMEGALUL --full doesnt work 
+        const messageHandler = showFullData === `--full` ? function githubReposName(repoData) { return ` N: ${repoData.name}❗ `; }
+            : function githubReposFullName(repoData) { return ` N: ${repoData.name}, F:  ${repoData.fork}, L:  ${repoData.language} ❗ `; }
+        const messages = (data || []).map(messageHandler);
 
-                })
-                .catch(function (err) {
-                    console.error(err);
-                })
-        }
-
-        return fullMessage ? ` ${fullMessage} ` : `${smallMessage}`
+        return messages.join(os.EOL);
     })
 };

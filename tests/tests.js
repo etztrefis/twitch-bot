@@ -4,7 +4,6 @@ repos(`etztrefis`, `--full`).then((messages) => {
 
 async function repos(user, showFullData) {
     const axios = require('axios').default;
-    const os = require('os');
     const { data } = await axios({
         method: 'get',
         url: `https://api.github.com/users/${user}/repos`,
@@ -13,8 +12,8 @@ async function repos(user, showFullData) {
 
     const messageHandler = showFullData === `--full` ? githubReposFullName : githubReposName;
     const messages = (data || []).map(messageHandler);
-
-    return messages.join(os.EOL);
+    // data = > [1,2,3] messageHandler = func(arg) { return arg + 1;} => messages.map(messageHandler) = > messages = [2,3,4]
+    return messages;
 }
 
 function githubReposName(repoData) {

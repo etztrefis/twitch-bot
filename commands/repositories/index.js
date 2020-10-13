@@ -11,11 +11,17 @@ module.exports = {
             url: `https://api.github.com/users/${user}/repos`,
             responseType: 'json',
         });
-        // OMEGALUL  OMEGALUL OMEGALUL OMEGALUL OMEGALUL --full doesnt work 
-        const messageHandler = showFullData === `--full` ? function githubReposName(repoData) { return ` N: ${repoData.name}❗ `; }
-            : function githubReposFullName(repoData) { return ` N: ${repoData.name}, F:  ${repoData.fork}, L:  ${repoData.language} ❗ `; }
+        //TypeError: Cannot read property 'name' of undefined : because of this.FullReposName() \ this.ReposName() need to refactor messsageHandler or 
+        //refuse to using array.map(), im tired
+        const messageHandler = showFullData === `--full` ? this.FullReposName() : this.ReposName();
         const messages = (data || []).map(messageHandler);
 
-        return messages.join(os.EOL);
+        return messages.join(os.EOL);;
+    }),
+    ReposName: (function githubReposName(repoData) {
+        return ` N: ${repoData.name}❗ `;
+    }),
+    FullReposName: (function githubReposFullName(repoData) {
+        return ` N: ${repoData.name}, F:  ${repoData.fork}, L:  ${repoData.language} ❗ `;
     })
 };

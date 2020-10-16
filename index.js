@@ -1,7 +1,7 @@
 const tmi = require('tmi.js');
 const options = require('./options.js')
 const ping = require('./commands/ping/index.js');
-//const repos = require('./commands/repositories/index.js');
+const repos = require('./commands/repositories/index.js');
 
 const commands = [`ping`, `repos`, `help`, `commands`];
 
@@ -20,17 +20,10 @@ client.on('message', async (channel, tags, message, self) => {
             client.say(channel, `@${tags.username}, ${await ping.Code()}`);
         }
         //REPOS COMMAND
-        //if (repos.Aliases.indexOf(args[0]) > -1) {
-        if (args[0].indexOf('repos') > -1) {
-            (async () => {
-                try {
-                    const messages = await repos(args[1], args[2]); //repos.Code()
-                    client.say(channel, `@${tags.username}, ${messages}`);
-                } catch (err) {
-                    client.say(channel, `${err}, ping @trefis monkaS`);;
-                    console.error(err);
-                }
-            })();
+        if (repos.Aliases.indexOf(args[0]) > -1) {
+            repos.Code(args[1], args[2]).then((messages) => {
+                client.say(channel, `@${tags.username}, ${messages}`);
+            });
         }
         //COMMANDS COMMAND
         if (ping.Aliases.indexOf(message[0]) > -1) {
@@ -62,26 +55,3 @@ client.on('message', async (channel, tags, message, self) => {
         }
     }
 });
-
-async function repos(user, showFullData) {
-    const axios = require('axios').default;
-    const os = require('os');
-    const { data } = await axios({
-        method: 'get',
-        url: `https://api.github.com/users/${user}/repos`,
-        responseType: 'json',
-    });
-
-    const messageHandler = showFullData === `--full` ? githubReposFullName : githubReposName;
-    const messages = (data || []).map(messageHandler);
-
-    return messages.join(os.EOL);;
-}
-
-function githubReposName(repoData) {
-    return ` N: ${repoData.name}❗ `;
-}
-
-function githubReposFullName(repoData) {
-    return ` N: ${repoData.name}, F:  ${repoData.fork}, L:  ${repoData.language} ❗ `;
-}

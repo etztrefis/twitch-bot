@@ -13,15 +13,13 @@ module.exports = {
         });
         //TypeError: Cannot read property 'name' of undefined : because of this.FullReposName() \ this.ReposName() need to refactor messsageHandler or 
         //refuse to using array.map(), im tired
-        const messageHandler = showFullData === `--full` ? this.FullReposName() : this.ReposName();
-        const messages = (data || []).map(messageHandler);
+        const messages = showFullData === `--full` ? 
+        (data || []).map(function(repoData){
+            return ` N: ${repoData.name}, F:  ${repoData.fork}, L:  ${repoData.language} ❗ `;
+        }) : (data || []).map(function(repoData){
+            return ` N: ${repoData.name}❗ `;
+        });
 
-        return messages.join(os.EOL);;
+        return messages.join(os.arch());
     }),
-    ReposName: (function githubReposName(repoData) {
-        return ` N: ${repoData.name}❗ `;
-    }),
-    FullReposName: (function githubReposFullName(repoData) {
-        return ` N: ${repoData.name}, F:  ${repoData.fork}, L:  ${repoData.language} ❗ `;
-    })
 };

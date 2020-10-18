@@ -2,6 +2,7 @@ const tmi = require('tmi.js');
 const options = require('./options.js')
 const ping = require('./commands/ping/index.js');
 const repos = require('./commands/repositories/index.js');
+const python = require('./commands/python/index.js');
 
 const commands = [`ping`, `repos`, `help`, `commands`];
 
@@ -18,6 +19,10 @@ client.on('message', async (channel, tags, message, self) => {
         //PING COMMAND
         if (ping.Aliases.indexOf(args[0]) > -1) {
             client.say(channel, `@${tags.username}, ${await ping.Code()}`);
+        }
+        //PYTHON COMMAND
+        if (python.Aliases.indexOf(args[0]) > -1) {
+            client.say(channel, `${await python.Code()}`);
         }
         //REPOS COMMAND
         if (repos.Aliases.indexOf(args[0]) > -1) {

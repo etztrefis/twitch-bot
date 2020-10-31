@@ -7,6 +7,7 @@ const python = require('./commands/python/index.js');
 const cock = require('./commands/cock/index.js');
 const booba = require('./commands/booba/index.js');
 const strimink = require('./commands/strimink/index.js');
+const test = require('./commands/test/index.js')
 
 let client = new ChatClient(options);
 
@@ -38,9 +39,14 @@ client.on("PRIVMSG", async (message) => {
                     client.say(message.channelName, `@${message.displayName}, You cannot use this command without specifying a target.`);
                 }
                 else {
-                    client.say(message.channelName, `@${message.displayName}, ${await repos.Code(args[1], args[2])}`);
+                    const string = await repos.Code(args[1]);
+                    if (string.length >= 500) {
+                        client.say(message.channelName, `@${message.displayName}, большое говно`);
+                        //TODO MESSAGE SEPARATOR
+                    } else {
+                        client.say(message.channelName, `@${message.displayName}, ${string}`);
+                    }
                 }
-                client.say(message.channelName, `@${message.displayName}, ${await repos.Code(args[1], args[2])}`);
                 break;
             }
             case (booba.Aliases.indexOf(args[0]) > -1): {
@@ -49,6 +55,13 @@ client.on("PRIVMSG", async (message) => {
             }
             case (strimink.Aliases.indexOf(args[0]) > -1): {
                 client.say(message.channelName, `${await strimink.Code()}`);
+                break;
+            }
+            case (test.Aliases.indexOf(args[0]) > -1): {
+                if (message.displayName === "trefis") {
+                    client.say(message.channelName, `${await test.Code()}`)
+                }
+                break;
             }
         }
     }

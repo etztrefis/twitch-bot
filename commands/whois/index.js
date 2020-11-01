@@ -1,9 +1,9 @@
 module.exports = {
-    Name: "userid",
+    Name: "whois",
     Author: "trefis",
-    Aliases: ["uid", "userid", "id"],
-    Date: "11/1/2020, 5:03:59 PM",
-    Code: (async function userid(user) {
+    Aliases: ["whois"],
+    Date: "11/1/2020, 5:17:51 PM",
+    Code: (async function whois(user) {
         try {
             const axios = require('axios').default;
             require("dotenv").config({ path: '../../.env' });
@@ -16,7 +16,13 @@ module.exports = {
                     'Authorization': process.env.BEARER
                 }
             });
-            return data.data == "" ? `User doesnt exists.` : `id: ${data.data[0]['id']}`
+            try {
+                let btype = data.data[0]['broadcaster_type'] == "" ? `null` : data.data[0]['broadcaster_type'];
+                let response = `Name: ${data.data[0]['display_name']}, Description: ${data.data[0]['description']}, View count: ${data.data[0]['view_count']}, Broadcater: ${btype}`
+                return response
+            } catch (error) {
+                return `User doesnt exists.`
+            }
         } catch (error) {
             return `Bad request. 404 Okayeg`
         }

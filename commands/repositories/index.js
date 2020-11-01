@@ -6,7 +6,6 @@ module.exports = {
     Code: (async function repos(user) {
         try {
             const axios = require('axios').default;
-            const os = require('os');
             const { data } = await axios({
                 method: 'get',
                 url: `https://api.github.com/users/${user}/repos`,
@@ -19,7 +18,7 @@ module.exports = {
             return messages == "" ? `That user doesn't have any repositories.` : messages.join()
 
         } catch (error) {
-            return `The response from server is: 404. Probably user doesnt exists. monkaS`
+            return `The response from server is: 404 Not Found. Probably user doesnt exists. monkaS`
         }
     }),
 };

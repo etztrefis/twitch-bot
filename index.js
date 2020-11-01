@@ -7,7 +7,9 @@ const python = require('./commands/python/index.js');
 const cock = require('./commands/cock/index.js');
 const booba = require('./commands/booba/index.js');
 const strimink = require('./commands/strimink/index.js');
-const test = require('./commands/test/index.js')
+const test = require('./commands/test/index.js');
+const userid = require('./commands/userid/index.js');
+const whois = require('./commands/whois/index.js');
 
 let client = new ChatClient(options);
 
@@ -60,6 +62,24 @@ client.on("PRIVMSG", async (message) => {
             case (test.Aliases.indexOf(args[0]) > -1): {
                 if (message.displayName === "trefis") {
                     client.say(message.channelName, `${await test.Code()}`)
+                }
+                break;
+            }
+            case (userid.Aliases.indexOf(args[0]) > -1): {
+                if (!args[1]) {
+                    client.say(message.channelName, `@${message.displayName}, Please specify a target.`)
+                }
+                else {
+                    client.say(message.channelName, `@${message.displayName}, ${await userid.Code(args[1])}`);
+                }
+                break;
+            }
+            case (whois.Aliases.indexOf(args[0]) > -1): {
+                if (!args[1]) {
+                    client.say(message.channelName, `@${message.displayName}, Please specify a target.`)
+                }
+                else {
+                    client.say(message.channelName, `@${message.displayName}, ${await whois.Code(args[1])}`);
                 }
                 break;
             }

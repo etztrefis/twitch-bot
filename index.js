@@ -10,6 +10,8 @@ const strimink = require('./commands/strimink/index.js');
 const test = require('./commands/test/index.js');
 const userid = require('./commands/userid/index.js');
 const whois = require('./commands/whois/index.js');
+const vanish = require('./commands/vanish/index.js');
+const as_bot = require('./commands/as_bot/index.js');
 
 let client = new ChatClient(options);
 
@@ -80,6 +82,18 @@ client.on("PRIVMSG", async (message) => {
                 }
                 else {
                     client.say(message.channelName, `@${message.displayName}, ${await whois.Code(args[1])}`);
+                }
+                break;
+            }
+            case (vanish.Aliases.indexOf(args[0]) > -1): {
+                client.privmsg(message.channelName, await vanish.Code(message))
+                break;
+            }
+            case (as_bot.Aliases.indexOf(args[0]) > -1): {
+                if (!args[1]) {
+                    client.say(message.channelName, `Okayeg`)
+                } else {
+                    client.say(message.channelName, await as_bot.Code(args[1]));
                 }
                 break;
             }

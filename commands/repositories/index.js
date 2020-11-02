@@ -3,6 +3,7 @@ module.exports = {
     Author: "trefis",
     Aliases: ["reps", "repos"],
     Date: "10/16/2020, 10:04:56 AM",
+    Description: "Posts all public repositories of user that indicated as argument.",
     Code: (async function repos(user) {
         try {
             const axios = require('axios').default;

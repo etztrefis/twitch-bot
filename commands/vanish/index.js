@@ -3,6 +3,7 @@ module.exports = {
     Author: "trefis",
     Aliases: ["vanish", "vanishme"],
     Date: "11/2/2020, 7:56:08 PM",
+    Description: "Times out user for 1 second. Only works if FeelsOkayegBot is a twitch moderator.",
     Code: (async function vanish(context) {
         if (context.badges.hasModerator) {
             return `I cannot time moderators out! monkaS`
@@ -18,4 +19,5 @@ module.exports = {
             return `/timeout ${context.displayName} 1 vanished`
         }
     })
+
 }

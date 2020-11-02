@@ -3,6 +3,7 @@ module.exports = {
     Author: "trefis",
     Aliases: ["whois"],
     Date: "11/1/2020, 5:17:51 PM",
+    Description: "Posts all user`s twitch data from his channel.",
     Code: (async function whois(user) {
         try {
             const axios = require('axios').default;

@@ -3,6 +3,7 @@ module.exports = {
     Author: "trefis",
     Aliases: ["uid", "userid", "id"],
     Date: "11/1/2020, 5:03:59 PM",
+    Description: "Posts twitch user`s id.",
     Code: (async function userid(user) {
         try {
             const axios = require('axios').default;

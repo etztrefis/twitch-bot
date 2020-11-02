@@ -1,5 +1,6 @@
 require("dotenv").config();
 const { ChatClient } = require("dank-twitch-irc");
+
 const options = require('./options.js')
 const ping = require('./commands/ping/index.js');
 const repos = require('./commands/repositories/index.js');
@@ -90,10 +91,12 @@ client.on("PRIVMSG", async (message) => {
                 break;
             }
             case (as_bot.Aliases.indexOf(args[0]) > -1): {
-                if (!args[1]) {
-                    client.say(message.channelName, `Okayeg`)
-                } else {
-                    client.say(message.channelName, await as_bot.Code(args[1]));
+                if (message.badges.hasModerator || message.badges.hasBroadcaster) {
+                    if (!args[1]) {
+                        client.say(message.channelName, `Okayeg`)
+                    } else {
+                        client.say(message.channelName, await as_bot.Code(args[1]));
+                    }
                 }
                 break;
             }

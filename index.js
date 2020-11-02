@@ -1,18 +1,6 @@
 require("dotenv").config();
 const { ChatClient } = require("dank-twitch-irc");
-
-const options = require('./options.js')
-const ping = require('./commands/ping/index.js');
-const repos = require('./commands/repositories/index.js');
-const python = require('./commands/python/index.js');
-const cock = require('./commands/cock/index.js');
-const booba = require('./commands/booba/index.js');
-const strimink = require('./commands/strimink/index.js');
-const test = require('./commands/test/index.js');
-const userid = require('./commands/userid/index.js');
-const whois = require('./commands/whois/index.js');
-const vanish = require('./commands/vanish/index.js');
-const as_bot = require('./commands/as_bot/index.js');
+const options = require('./options.js');
 
 let client = new ChatClient(options);
 
@@ -24,6 +12,8 @@ client.on("close", (error => {
 }))
 
 client.on("PRIVMSG", async (message) => {
+    let time = new Date().toLocaleString().replace(/T/, ' ').replace(/\..+/, '');
+    console.log(`${time} #${message.channelName} [${message.displayName}] ${message.messageText}`)
     if (message.messageText.charAt(0) === options.prefix) {
         let args = message.messageText.substring(1).toLowerCase().split(' ');
         switch (true) {
@@ -113,3 +103,15 @@ client.connect();
         console.log("Error: timed out Okayeg");
     }
 })();
+
+const ping = require('./commands/ping/index.js');
+const repos = require('./commands/repositories/index.js');
+const python = require('./commands/python/index.js');
+const cock = require('./commands/cock/index.js');
+const booba = require('./commands/booba/index.js');
+const strimink = require('./commands/strimink/index.js');
+const test = require('./commands/test/index.js');
+const userid = require('./commands/userid/index.js');
+const whois = require('./commands/whois/index.js');
+const vanish = require('./commands/vanish/index.js');
+const as_bot = require('./commands/as_bot/index.js');

@@ -23,10 +23,12 @@ client.on("close", (error => {
         console.error(error);
     }
 }));
+client.say("feelsokayegbot", "monkaS");
 
 client.on("PRIVMSG", async (message) => {
     let time = new Date().toLocaleString().replace(/T/, ' ').replace(/\..+/, '');
     console.log(`${time} #${message.channelName} [${message.displayName}] ${message.messageText}`);
+
     if (message.messageText.charAt(0) === options.prefix) {
         let args = message.messageText.substring(1).toLowerCase().split(' ');
         switch (true) {
@@ -125,7 +127,8 @@ client.connect();
 
 (async () => {
     try {
-        await client.join("trefis");
+        const channels = ["trefis", "feelsokayegbot"];
+        await client.joinAll(channels);
     } catch (error) {
         console.log("Error: timed out Okayeg");
     }

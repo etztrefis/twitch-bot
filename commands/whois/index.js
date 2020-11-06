@@ -20,12 +20,12 @@ module.exports = {
             try {
                 let btype = data.data[0]['broadcaster_type'] == "" ? `` : `, Broadcaster: ${data.data[0]['broadcaster_type']}`;
                 let response = `Name: ${data.data[0]['display_name']}, Description: ${data.data[0]['description']}, View count: ${data.data[0]['view_count']}${btype}`
-                return response
+                return response;
             } catch (error) {
-                return `User doesnt exists.`
+                return `User doesnt exists.`;
             }
         } catch (error) {
-            return `Bad request. 404 Okayeg`
+            return `Bad request. 404 Okayeg`;
         }
     })
 };

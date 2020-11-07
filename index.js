@@ -1,5 +1,6 @@
 require("dotenv").config();
 const { ChatClient } = require("dank-twitch-irc");
+const os = require('os');
 const options = require('./options.js');
 
 const ping = require('./commands/ping/index.js');
@@ -23,7 +24,7 @@ client.on("close", (error => {
         console.error(error);
     }
 }));
-client.say("feelsokayegbot", "monkaS");
+client.say("feelsokayegbot", `monkaS`);
 
 client.on("PRIVMSG", async (message) => {
     let time = new Date().toLocaleString().replace(/T/, ' ').replace(/\..+/, '');

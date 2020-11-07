@@ -15,7 +15,7 @@ For example:
 >
 >PASSWORD = "oauth:token"
               
-# Note:
+# Notes:
 - most of the commands likely won't work because of database integration
 
 ![Okayeg](https://cdn.betterttv.net/emote/5de9cb6191129e77b47ca987/1x) ...

@@ -26,6 +26,8 @@ client.on("close", (error => {
 }));
 client.say("feelsokayegbot", `monkaS`);
 
+const commandsUsers = new Set();
+
 client.on("PRIVMSG", async (message) => {
     let time = new Date().toLocaleString().replace(/T/, ' ').replace(/\..+/, '');
     console.log(`${time} #${message.channelName} [${message.displayName}] ${message.messageText}`);
@@ -34,7 +36,13 @@ client.on("PRIVMSG", async (message) => {
         let args = message.messageText.substring(1).toLowerCase().split(' ');
         switch (true) {
             case (ping.Aliases.indexOf(args[0]) > -1): {
-                client.say(message.channelName, `@${message.displayName}, ${await ping.Code()}`);
+                if(!commandsUsers.has(message.displayName)){
+                    client.say(message.channelName, `@${message.displayName}, ${await ping.Code()}`);
+                    commandsUsers.add(message.displayName);
+                    setTimeout(() =>{
+                        commandsUsers.delete(message.displayName);
+                    }, ping.Cooldown);
+                }
                 break;
             }
             case (python.Aliases.indexOf(args[0]) > -1): {

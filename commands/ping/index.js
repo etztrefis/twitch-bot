@@ -1,5 +1,6 @@
 module.exports = {
     Name: "ping",
+	Cooldown: 5000,
     Author: "trefis",
     Aliases: ["pang", "peng", "pong", "pung", "pyng", "ping"],
     Date: "10/12/2020, 10:12:26 AM",

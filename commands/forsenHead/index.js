@@ -1,5 +1,5 @@
 module.exports = {
-	Name: "forsenHead",
+	Name: "mom",
 	Author: "trefis",
 	Cooldown: 5000,
 	Aliases: ["yourmom", "forsenhead", "mom"],

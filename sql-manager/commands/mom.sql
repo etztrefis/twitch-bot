@@ -13,7 +13,7 @@ INSERT INTO Commands
 VALUES
 
 (
-    "forsenHead",
+    "mom",
 	"trefis",
 	5000, 
 	"yourmom, forsenhead, mom",

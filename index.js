@@ -1,5 +1,5 @@
 require("dotenv").config();
-const { ChatClient } = require("dank-twitch-irc");
+const { ChatClient, colorToHexString } = require("dank-twitch-irc");
 const { Sequelize, QueryTypes } = require("sequelize");
 const options = require("./options.js");
 
@@ -409,7 +409,10 @@ client.on("PRIVMSG", async (message) => {
 							)}`
 						);
 					} else if (!args[1]) {
-						return `Need to specify the command that you want to know more about. Type \`commands`;
+						client.say(
+							message.channelName,
+							`@${message.displayName}, Need to specify the command that you want to know more about. Type \`commands`
+						);
 					}
 					await sequelize
 						.query(

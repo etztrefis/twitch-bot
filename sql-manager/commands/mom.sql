@@ -18,7 +18,7 @@ VALUES
 	5000, 
 	"yourmom, forsenhead, mom",
 	"11/6/2020, 6:45:40 PM",
-	"Posts random joke about your mom.",
+	"Posts random joke about your mom. You can use it with user as second argument.",
 	"async function forsenHead() {
 		const axios = require('axios').default;
 		const { data } = await axios({

@@ -28,7 +28,7 @@ module.exports = {
 			);
 
 			if (query.length > 0) {
-				return `${query[0].Description}`;
+				return `Description: ${query[0].Description}`;
 			} else if (query.length >= 0) {
 				return `Wrong command.`;
 			}

@@ -15,6 +15,7 @@ const whois = require("./commands/whois/index.js");
 const vanish = require("./commands/vanish/index.js");
 const asBot = require("./commands/as_bot/index.js");
 const forsenHead = require("./commands/forsenHead/index.js");
+const commands = require("./commands/commands/index.js");
 
 let client = new ChatClient(options);
 
@@ -389,6 +390,34 @@ client.on("PRIVMSG", async (message) => {
 							{ type: QueryTypes.DELETE }
 						);
 					}, forsenHead.Cooldown);
+				}
+				break;
+			}
+
+			case commands.Aliases.indexOf(args[0]) > -1: {
+				const commandUsed = await sequelize.query(
+					`SELECT * FROM Cooldowns WHERE DisplayName = "${message.displayName}" AND Command = "${args[0]}"`,
+					{ type: QueryTypes.SELECT }
+				);
+				if (commandUsed.length == 0) {
+					client.say(
+						message.channelName,
+						`@${message.displayName}, ${await commands.Code()}`
+					);
+					await sequelize
+						.query(
+							`INSERT INTO Cooldowns(DisplayName, Command) VALUES ("${message.displayName}", "${args[0]}")`,
+							{ type: QueryTypes.INSERT }
+						)
+						.catch((error) => {
+							console.error(error);
+						});
+					setTimeout(() => {
+						sequelize.query(
+							`DELETE FROM Cooldowns WHERE DisplayName = "${message.displayName}" AND Command = "${args[0]}"`,
+							{ type: QueryTypes.DELETE }
+						);
+					}, commands.Cooldown);
 				}
 				break;
 			}

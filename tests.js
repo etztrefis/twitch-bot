@@ -1,20 +1,29 @@
-// const { Sequelize } = require("sequelize");
-// const { QueryTypes } = require("sequelize");
-// require("dotenv").config({ path: "../../.env" })
+const { Sequelize } = require("sequelize");
+const { QueryTypes } = require("sequelize");
+require("dotenv").config({ path: "./.env" });
 
-// const sequelize = new Sequelize(process.env.DBNAME, process.env.USER, process.env.PASS, {
-//     host: process.env.HOST,
-//     dialect: 'mysql'
-// })
-// borobushe_loh();
-// async function borobushe_loh() {
-//     let arg = "ping";
-//     const query = await sequelize.query(`SELECT * FROM Coommands WHERE Name = "${arg}" AND Avaliable = 1`, { type: QueryTypes.SELECT });
-//     if (query.length > 0) {
-//         console.log(JSON.stringify(query[0].Description))
-//     }
-
-// }
+borobushe_loh();
+async function borobushe_loh() {
+	const sequelize = new Sequelize(
+		process.env.DBNAME,
+		process.env.USER,
+		process.env.PASS,
+		{
+			host: process.env.HOST,
+			dialect: "mysql",
+		}
+	);
+	const query = await sequelize.query("SELECT Name FROM Commands", {
+		type: QueryTypes.SELECT,
+	});
+	const response = [];
+	if (query.length > 0) {
+		query.forEach((value, index) => {
+			response.push(query[index].Name);
+		});
+	}
+	console.log(response.join(", "));
+}
 
 // const fs = require("fs");
 // fs.readFile("./data/mom_jokes.json", (err, data) => {

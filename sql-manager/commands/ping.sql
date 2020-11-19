@@ -19,7 +19,7 @@ VALUES
 	"pang, peng, pong, pung, pyng, ping",
 	"10/12/2020, 10:12:26 AM",
 	"Ping!",
-	"Code: async function ping() {
+	"async function ping() {
 		const process = require('process');
 
 		let ut_sec = process.uptime();

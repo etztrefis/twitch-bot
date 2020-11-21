@@ -19,7 +19,7 @@ VALUES
 	"leave",
 	"11/21/2020, 11:50:48 PM",
 	"Bot leaves from the channel, that indicated as argument of the command.",
-	"async function join(database, ctx, client) {
+	"async function leave(database, ctx, client) {
 		try {
 			const data = await database.query(
 				`SELECT * FROM Channels WHERE Channel = '${ctx}'`

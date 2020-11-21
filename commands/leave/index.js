@@ -6,7 +6,7 @@ module.exports = {
 	Date: "11/21/2020, 11:50:48 PM",
 	Description:
 		"Bot leaves from the channel, that indicated as argument of the command.",
-	Code: async function join(database, ctx, client) {
+	Code: async function leave(database, ctx, client) {
 		try {
 			const data = await database.query(
 				`SELECT * FROM Channels WHERE Channel = "${ctx}"`
@@ -22,7 +22,7 @@ module.exports = {
 				);
 				return `Parted. TriHard 7`;
 			} else {
-				return `.`;
+				return `This channel is not present in the database.`;
 			}
 		} catch (error) {
 			console.log(error);

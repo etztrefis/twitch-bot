@@ -39,7 +39,6 @@ client.on("close", (error) => {
 		console.error(error);
 	}
 });
-client.say("feelsokayegbot", `monkaS`);
 (async () => {
 	await sequelize.query(`DELETE FROM Cooldowns`, { type: QueryTypes.DELETE });
 })();
@@ -634,6 +633,7 @@ client.connect();
 			channels.push(channelsquery[0][i].Channel);
 		}
 		await client.joinAll(channels);
+		await client.say("feelsokayegbot", `monkaS`);
 	} catch (error) {
 		console.log("Error: timed out Okayeg");
 		console.error(error);

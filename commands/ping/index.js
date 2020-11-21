@@ -20,6 +20,6 @@ module.exports = {
 		ut_min = ut_min % 60;
 		ut_sec = ut_sec % 60;
 
-		return `Pong! Reporting for duty! Okayeg :+1:  Uptime: ${ut_hour}h, ${ut_min}m, ${ut_sec}s;`;
+		return `Pong! Reporting for duty! Okayeg 👍  Uptime: ${ut_hour}h, ${ut_min}m, ${ut_sec}s;`;
 	},
 };

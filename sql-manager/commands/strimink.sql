@@ -13,7 +13,7 @@ INSERT INTO Commands
 VALUES
 
 (
-    "strimink ",
+    "strimink",
 	"trefis",
 	10000,
 	"19:30, strimink",

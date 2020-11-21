@@ -41,13 +41,53 @@ client.say("feelsokayegbot", `monkaS`);
 	await sequelize.query(`DELETE FROM Cooldowns`, { type: QueryTypes.DELETE });
 })();
 client.on("PRIVMSG", async (message) => {
-	let time = new Date()
-		.toLocaleString()
-		.replace(/T/, " ")
-		.replace(/\..+/, "");
-	console.log(
-		`${time} #${message.channelName} [${message.displayName}] ${message.messageText}`
-	);
+	await sequelize
+		.query(`SELECT ID FROM Users WHERE NickName = "${message.displayName}"`)
+		.then(async (value) => {
+			if (value[0].length < 1) {
+				await sequelize
+					.query(
+						`INSERT INTO Users (NickName) VALUES ("${message.displayName}")`
+					)
+					.then(async () => {
+						await sequelize
+							.query(
+								`SELECT ID FROM Users WHERE NickName="${message.displayName}"`
+							)
+							.then(async (data) => {
+								await sequelize
+									.query(
+										`INSERT INTO Messages (User, Message, ChannelName) VALUES ("${JSON.stringify(
+											data[0][0].ID
+										)}", "${message.messageText}", "${
+											message.channelName
+										}")`
+									)
+									.catch((error) => {
+										console.error(error);
+									});
+							});
+					});
+			} else {
+				await sequelize
+					.query(
+						`SELECT ID FROM Users WHERE NickName="${message.displayName}"`
+					)
+					.then(async (data) => {
+						await sequelize
+							.query(
+								`INSERT INTO Messages (User, Message, ChannelName) VALUES ("${JSON.stringify(
+									data[0][0].ID
+								)}", "${message.messageText}", "${
+									message.channelName
+								}")`
+							)
+							.catch((error) => {
+								console.error(error);
+							});
+					});
+			}
+		});
 
 	if (message.messageText.charAt(0) === options.prefix) {
 		let args = message.messageText.substring(1).toLowerCase().split(" ");

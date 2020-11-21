@@ -13,7 +13,7 @@ INSERT INTO Commands
 VALUES
 
 (
-    "as_bot",
+    "as_okayeg",
 	"trefis",
 	null,
 	"as_okayeg, okayeg",

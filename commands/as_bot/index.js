@@ -1,5 +1,5 @@
 module.exports = {
-	Name: "as_bot",
+	Name: "as_okayeg",
 	Author: "trefis",
 	Cooldown: 0,
 	Aliases: ["as_okayeg", "okayeg"],

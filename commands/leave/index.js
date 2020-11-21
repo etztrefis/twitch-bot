@@ -3,7 +3,7 @@ module.exports = {
 	Author: "trefis",
 	Cooldown: 5000,
 	Aliases: ["leave"],
-	Date: "",
+	Date: "11/21/2020, 11:50:48 PM",
 	Description:
 		"Bot leaves from the channel, that indicated as argument of the command.",
 	Code: async function join(database, ctx, client) {

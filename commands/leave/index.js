@@ -1,28 +1,28 @@
 module.exports = {
-	Name: "join",
+	Name: "leave",
 	Author: "trefis",
 	Cooldown: 5000,
-	Aliases: ["join"],
-	Date: "11/21/2020, 11:31:07 PM",
+	Aliases: ["leave"],
+	Date: "",
 	Description:
-		"Bot joins to the channel, that indicated as argument of the command.",
+		"Bot leaves from the channel, that indicated as argument of the command.",
 	Code: async function join(database, ctx, client) {
 		try {
 			const data = await database.query(
 				`SELECT * FROM Channels WHERE Channel = "${ctx}"`
 			);
 			if (data[0].length >= 1) {
-				return `Already joined.`;
-			} else {
-				database.query(
-					`INSERT INTO Channels (Channel) VALUES ("${ctx}")`
-				);
 				try {
-					client.join(ctx);
+					client.part(ctx);
 				} catch (error) {
 					console.log("Error: timed out Okayeg");
 				}
-				return `Done.`;
+				await database.query(
+					`DELETE FROM Channels WHERE Channel = "${ctx}"`
+				);
+				return `Parted. TriHard 7`;
+			} else {
+				return `.`;
 			}
 		} catch (error) {
 			console.log(error);

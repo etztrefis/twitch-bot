@@ -17,6 +17,7 @@ const asBot = require("./commands/as_bot/index.js");
 const forsenHead = require("./commands/forsenHead/index.js");
 const commands = require("./commands/commands/index.js");
 const help = require("./commands/help/index.js");
+const join = require("./commands/join/index.js");
 
 let client = new ChatClient(options);
 
@@ -27,6 +28,7 @@ const sequelize = new Sequelize(
 	{
 		host: process.env.HOST,
 		dialect: "mysql",
+		logging: false,
 	}
 );
 
@@ -555,6 +557,36 @@ client.on("PRIVMSG", async (message) => {
 				}
 				break;
 			}
+
+			case join.Aliases.indexOf(args[0]) > -1: {
+				if (message.displayName === "trefis") {
+					const commandUsed = await sequelize.query(
+						`SELECT * FROM Cooldowns WHERE DisplayName = "${message.displayName}" AND Command = "${args[0]}"`,
+						{ type: QueryTypes.SELECT }
+					);
+					if (commandUsed.length == 0) {
+						client.say(
+							message.channelName,
+							`${await join.Code(sequelize, args[1], client)}`
+						);
+						await sequelize
+							.query(
+								`INSERT INTO Cooldowns(DisplayName, Command) VALUES ("${message.displayName}", "${args[0]}")`,
+								{ type: QueryTypes.INSERT }
+							)
+							.catch((error) => {
+								console.error(error);
+							});
+						setTimeout(() => {
+							sequelize.query(
+								`DELETE FROM Cooldowns WHERE DisplayName = "${message.displayName}" AND Command = "${args[0]}"`,
+								{ type: QueryTypes.DELETE }
+							);
+						}, join.Cooldown);
+					}
+				}
+				break;
+			}
 		}
 	}
 });
@@ -563,9 +595,16 @@ client.connect();
 
 (async () => {
 	try {
-		const channels = ["trefis", "feelsokayegbot"];
+		const channels = [];
+		const channelsquery = await sequelize.query(
+			`SELECT Channel FROM Channels`
+		);
+		for (let i = 0; i < channelsquery[0].length; i++) {
+			channels.push(channelsquery[0][i].Channel);
+		}
 		await client.joinAll(channels);
 	} catch (error) {
 		console.log("Error: timed out Okayeg");
+		console.error(error);
 	}
 })();

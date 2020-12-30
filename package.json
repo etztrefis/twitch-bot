@@ -18,7 +18,7 @@
   "homepage": "https://github.com/etztrefis/feelsokayegbot#readme",
   "dependencies": {
     "axios": "^0.20.0",
-    "dank-twitch-irc": "^4.1.0",
+    "dank-twitch-irc": "^4.3.0",
     "dotenv": "^8.2.0",
     "mysql2": "^2.2.5",
     "sequelize": "^6.3.5"

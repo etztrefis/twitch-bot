@@ -570,6 +570,7 @@ client.connect();
 		}
 		await client.joinAll(channels);
 		await client.say("feelsokayegbot", `monkaS`);
+		await client.say("rilaveon", `😳`);
 	} catch (error) {
 		console.log("Error: timed out Okayeg");
 		console.error(error);
